@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TodoApp.Context;
 using TodoApp.Repositories;
+using TodoApp.Utils;
 
 namespace TodoApp
 {
@@ -47,6 +48,7 @@ namespace TodoApp
             // Context
             services.AddScoped<ITodoAppContext, TodoAppContext>();
 
+            services.AddAutoMapper(typeof(TodoAppMapper));
             services.AddControllers();
             services.AddMvc().AddNewtonsoftJson();
 
