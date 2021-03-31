@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TodoApp.Context;
+using TodoApp.Repositories;
 
 namespace TodoApp
 {
@@ -41,6 +42,7 @@ namespace TodoApp
             // Services
 
             // Repositories
+            services.AddScoped<IUserRepository, UserRepository>();
 
             // Context
             services.AddScoped<ITodoAppContext, TodoAppContext>();
