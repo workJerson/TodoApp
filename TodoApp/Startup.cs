@@ -48,6 +48,15 @@ namespace TodoApp
             services.AddScoped<ITodoAppContext, TodoAppContext>();
 
             services.AddControllers();
+            services.AddMvc().AddNewtonsoftJson();
+
+            services.AddCors(o => o.AddPolicy("AllowAllPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoApp", Version = "v1" });

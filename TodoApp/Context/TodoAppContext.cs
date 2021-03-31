@@ -10,11 +10,9 @@ namespace TodoApp.Context
 {
     public partial class TodoAppContext : DbContext
     {   
-        private readonly IHttpContextAccessor contextAccessor;
-        public TodoAppContext(DbContextOptions<TodoAppContext> options, IHttpContextAccessor contextAccessor)
+        public TodoAppContext(DbContextOptions<TodoAppContext> options)
             : base(options)
         {
-            this.contextAccessor = contextAccessor;
         }
 
         public virtual DbSet<AddressDetail> AddressDetails { get; set; }
