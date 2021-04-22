@@ -97,8 +97,51 @@ namespace TodoApp.Repositories
         public async Task<(User, string[])> Show(Guid Guid)
         {
             var result = await context.Users
+                .Include(u => u.UserDetail)
+                .Include(u => u.AddressDetails)
+                    .ThenInclude(a => a.Country)
+                .Include(u => u.ContactDetails)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(u => u.Guid == Guid);
+
+           //var resultLinq = await (from u in context.Users
+           //                 join d in context.UserDetails on u.UserId equals d.UserId
+           //                 join a in context.AddressDetails on u.UserId equals a.Userid into addressList
+           //                 from ad in addressList.DefaultIfEmpty()
+           //                 join c in context.ContactDetails on u.UserId equals c.UserId into contactList
+           //                 from cd in contactList.DefaultIfEmpty()
+           //                 select new {
+           //                     u.Guid,
+           //                     u.LoginAttempts,
+           //                     u.Status,
+           //                     u.CreatedAt,
+           //                     u.CreatedBy,
+           //                     u.UpdatedAt,
+           //                     u.UpdatedBy,
+           //                     UserDetail = new  {
+           //                         d.FirstName,
+           //                         d.LastName,
+           //                         d.MiddleName,
+           //                         d.Gender,
+           //                         d.Occupation,
+           //                         d.Nationality
+           //                     },
+           //                     AddressDetails = (from ad in u.AddressDetails
+           //                                       join c in context.Countries on ad.CountryId equals c.CountryId
+           //                                       select new { 
+           //                                           ad.Street,
+           //                                           ad.City,
+           //                                           ad.Province,
+           //                                           ad.Postal,
+           //                                           Country = new
+           //                                           {
+           //                                               c.CountryCode,
+           //                                               c.Name,
+           //                                               c.CurrencyCode
+           //                                           }
+           //                                       }).ToList(),
+           //                     ContactDetails = (from cds in u.ContactDetails select cds).ToList()
+           //                 }).FirstOrDefaultAsync(u => u.Guid == Guid);
 
             return (result, null);
         }
@@ -120,6 +163,7 @@ namespace TodoApp.Repositories
             {
                 result.LoginAttempts = modelObject.LoginAttempts;
                 result.Status = modelObject.Status;
+                result.Username = modelObject.Username;
                 await context.SaveChangesAsync();
                 await transaction.CommitAsync();
                 return (result, null);

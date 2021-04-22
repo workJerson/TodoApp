@@ -9,7 +9,8 @@ namespace TodoApp.Models
     {
         public User()
         {
-            UserDetails = new HashSet<UserDetail>();
+            AddressDetails = new HashSet<AddressDetail>();
+            ContactDetails = new HashSet<ContactDetail>();
         }
 
         public long UserId { get; set; }
@@ -23,6 +24,13 @@ namespace TodoApp.Models
         public string UpdatedBy { get; set; }
         public Guid? Guid { get; set; }
 
-        public virtual ICollection<UserDetail> UserDetails { get; set; }
+        public virtual UserDetail UserDetail { get; set; }
+        public virtual ICollection<AddressDetail> AddressDetails { get; set; }
+        public virtual ICollection<ContactDetail> ContactDetails { get; set; }
+
+        public static implicit operator User(object v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

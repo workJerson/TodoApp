@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using TodoApp.Models;
@@ -9,7 +8,11 @@ using TodoApp.Models;
 namespace TodoApp.Context
 {
     public partial class TodoAppContext : DbContext
-    {   
+    {
+        public TodoAppContext()
+        {
+        }
+
         public TodoAppContext(DbContextOptions<TodoAppContext> options)
             : base(options)
         {
@@ -20,10 +23,6 @@ namespace TodoApp.Context
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,11 +68,11 @@ namespace TodoApp.Context
                     .HasForeignKey(d => d.CountryId)
                     .HasConstraintName("FK_AddressDetails_Countries");
 
-                entity.HasOne(d => d.UserDetail)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.AddressDetails)
-                    .HasForeignKey(d => d.UserDetailId)
+                    .HasForeignKey(d => d.Userid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_AddressDetails_UserDetails");
+                    .HasConstraintName("FK_AddressDetails_Users");
             });
 
             modelBuilder.Entity<ContactDetail>(entity =>
@@ -103,10 +102,10 @@ namespace TodoApp.Context
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.UserDetail)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.ContactDetails)
-                    .HasForeignKey(d => d.UserDetailId)
-                    .HasConstraintName("FK_ContactDetails_UserDetails");
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_ContactDetails_Users");
             });
 
             modelBuilder.Entity<Country>(entity =>
@@ -171,9 +170,9 @@ namespace TodoApp.Context
 
             modelBuilder.Entity<UserDetail>(entity =>
             {
-                entity.HasKey(e => e.UseDetailId);
+                entity.HasKey(e => e.UserId);
 
-                entity.Property(e => e.UseDetailId).ValueGeneratedNever();
+                entity.Property(e => e.UserId).ValueGeneratedNever();
 
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getutcdate())");
 
@@ -215,8 +214,9 @@ namespace TodoApp.Context
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.UserDetails)
-                    .HasForeignKey(d => d.UserId)
+                    .WithOne(p => p.UserDetail)
+                    .HasForeignKey<UserDetail>(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_UserDetails_Users");
             });
 

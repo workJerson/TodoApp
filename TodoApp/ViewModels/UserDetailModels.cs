@@ -25,7 +25,5 @@ namespace TodoApp.ViewModels
     }
     public class GetUserDetailsModel : UpdateUserDetailsModel
     {
-        public ICollection<GetAddressDetailModel> AddressDetails { get; set; }
-        public ICollection<GetContactDetailModel> ContactDetails { get; set; }
     }
 }

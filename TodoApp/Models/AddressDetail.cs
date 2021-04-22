@@ -8,7 +8,7 @@ namespace TodoApp.Models
     public partial class AddressDetail
     {
         public long AddressDetailId { get; set; }
-        public long UserDetailId { get; set; }
+        public long Userid { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string Province { get; set; }
@@ -22,6 +22,6 @@ namespace TodoApp.Models
         public Guid? Guid { get; set; }
 
         public virtual Country Country { get; set; }
-        public virtual UserDetail UserDetail { get; set; }
+        public virtual User User { get; set; }
     }
 }
