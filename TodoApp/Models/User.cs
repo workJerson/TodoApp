@@ -14,6 +14,7 @@ namespace TodoApp.Models
         }
 
         public long UserId { get; set; }
+        public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public int? LoginAttempts { get; set; }
@@ -22,15 +23,10 @@ namespace TodoApp.Models
         public DateTime? UpdatedAt { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
-        public Guid? Guid { get; set; }
+        public Guid Guid { get; set; }
 
         public virtual UserDetail UserDetail { get; set; }
         public virtual ICollection<AddressDetail> AddressDetails { get; set; }
         public virtual ICollection<ContactDetail> ContactDetails { get; set; }
-
-        public static implicit operator User(object v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

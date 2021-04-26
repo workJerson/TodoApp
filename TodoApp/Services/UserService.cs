@@ -31,7 +31,7 @@ namespace TodoApp.Services
             var payload = mapper.Map<User>(obj);
             var result = await userRepository.Create(payload);
 
-            if (result.Item2.Length > 0)
+            if (result.Item2 != null)
             {
                 return new GenericResponse<GetUserModel>(null, result.Item2.Select(e => new ErrorField("message", e)).ToList(), "Error on creating user.", 400);
             }
@@ -43,7 +43,7 @@ namespace TodoApp.Services
         {
             var result = await userRepository.Delete(Guid);
 
-            if (result.Item2.Length > 0)
+            if (result.Item2 != null)
             {
                 return new GenericResponse<GetUserModel>(null, result.Item2.Select(e => new ErrorField("message", e)).ToList(), "Error on deleting user.", 400);
             }
@@ -55,7 +55,7 @@ namespace TodoApp.Services
         {
             var result = await userRepository.Show(guid);
 
-            if (result.Item2.Length > 0)
+            if (result.Item2 != null)
             {
                 return new GenericResponse<GetUserModel>(null, result.Item2.Select(e => new ErrorField("message", e)).ToList(), "Error on retreiving user.", 400);
             }
@@ -82,7 +82,7 @@ namespace TodoApp.Services
 
             var result = await userRepository.Update(user);
 
-            if (result.Item2.Length > 0)
+            if (result.Item2 != null)
             {
                 return new GenericResponse<GetUserModel>(null, result.Item2.Select(e => new ErrorField("message", e)).ToList(), "Error on updating  user.", 400);
             }

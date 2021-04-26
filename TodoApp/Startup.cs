@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TodoApp.Context;
 using TodoApp.Repositories;
+using TodoApp.Services;
 using TodoApp.Utils;
 
 namespace TodoApp
@@ -40,6 +41,7 @@ namespace TodoApp
             services.AddDbContext<TodoAppContext>(opts => opts.UseSqlServer(ConnectionString));
 
             // Class Bindings
+            services.AddScoped<IUserService, UserService>();
             // Services
 
             // Repositories

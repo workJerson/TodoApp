@@ -16,7 +16,7 @@ namespace TodoApp.Models
         public DateTime? UpdatedAt { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
-        public Guid? Guid { get; set; }
+        public Guid Guid { get; set; }
 
         public virtual User User { get; set; }
     }

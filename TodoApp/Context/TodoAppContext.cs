@@ -30,8 +30,6 @@ namespace TodoApp.Context
 
             modelBuilder.Entity<AddressDetail>(entity =>
             {
-                entity.Property(e => e.AddressDetailId).ValueGeneratedNever();
-
                 entity.Property(e => e.City)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -41,6 +39,8 @@ namespace TodoApp.Context
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Guid).HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.Postal)
                     .HasMaxLength(20)
@@ -77,8 +77,6 @@ namespace TodoApp.Context
 
             modelBuilder.Entity<ContactDetail>(entity =>
             {
-                entity.Property(e => e.ContactDetailId).ValueGeneratedNever();
-
                 entity.Property(e => e.ContactNumber)
                     .HasMaxLength(20)
                     .IsUnicode(false);
@@ -88,6 +86,8 @@ namespace TodoApp.Context
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Guid).HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.Prefix)
                     .HasMaxLength(10)
@@ -110,8 +110,6 @@ namespace TodoApp.Context
 
             modelBuilder.Entity<Country>(entity =>
             {
-                entity.Property(e => e.CountryId).ValueGeneratedNever();
-
                 entity.Property(e => e.CountryCode)
                     .HasMaxLength(10)
                     .IsUnicode(false);
@@ -125,6 +123,8 @@ namespace TodoApp.Context
                 entity.Property(e => e.CurrencyCode)
                     .HasMaxLength(10)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Guid).HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(100)
@@ -142,13 +142,19 @@ namespace TodoApp.Context
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.UserId).ValueGeneratedNever();
-
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Guid).HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.LoginAttempts).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(15)
@@ -187,6 +193,8 @@ namespace TodoApp.Context
                 entity.Property(e => e.Gender)
                     .HasMaxLength(3)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Guid).HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.LastName)
                     .HasMaxLength(50)
